@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 /* eslint-disable max-len */
 import React from 'react';
+import { Label } from 'react-bootstrap';
 import ProductRow from './ProductRow.jsx';
 
 const ProductTable = ({ products, deleteProduct }) => (
   <div>
-    <h1>Company Inventory</h1>
-    <p>Showing available products</p>
+    <p>Showing all available products</p>
     <hr />
     <table>
       <thead>
