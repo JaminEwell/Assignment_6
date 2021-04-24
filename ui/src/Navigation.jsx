@@ -1,9 +1,12 @@
-import React from 'react'
-import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import {
+  Navbar, Nav, NavItem, Grid,
+} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function Navigation() {
-  const head = 'My Company Inventory'
+  const head = 'My Company Inventory';
   return (
     <Navbar fluid>
       <Navbar.Header>
@@ -15,7 +18,7 @@ function Navigation() {
         </LinkContainer>
       </Nav>
     </Navbar>
-  )
+  );
 }
 
-export default Navigation
+export default Navigation;
