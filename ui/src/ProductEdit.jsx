@@ -1,7 +1,11 @@
-/* eslint-disable react/sort-comp */
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Button, Form, FormGroup, ControlLabel, FormControl, InputGroup,
+} from 'react-bootstrap';
 import graphQLFetch from './graphQLFetch';
 import NumInput from './NumInput.jsx';
 import TextInput from './TextInput.jsx';
@@ -35,14 +39,6 @@ class ProductEdit extends React.Component {
     }
   }
 
-  onChange = (event, naturalValue) => {
-    const { name, value: textValue } = event.target;
-    const value = naturalValue === undefined ? textValue : naturalValue;
-    this.setState((prevState) => ({
-      product: { ...prevState.product, [name]: value },
-    }));
-  }
-
   async handleSubmit(e) {
     e.preventDefault();
     const { product } = this.state;
@@ -67,6 +63,15 @@ class ProductEdit extends React.Component {
     }
   }
 
+  onChange = (event, naturalValue) => {
+    console.log('event.target name', event.target.name);
+    const { name, value: textValue } = event.target;
+    const value = naturalValue === undefined ? textValue : naturalValue;
+    this.setState((prevState) => ({
+      product: { ...prevState.product, [name]: value },
+    }));
+  }
+
   async loadData() {
     const query = `query Product($id: Int!) {
       Product(id: $id) {
@@ -89,52 +94,59 @@ class ProductEdit extends React.Component {
       },
     } = this.state;
     return id ? (
-      <div style={{ color: 'black' }}>
+      <div style={{ color: 'white' }}>
         <form onSubmit={this.handleSubmit}>
           <h1>{`Editing Product ID: ${id}`}</h1>
           <table>
             <tbody>
               <tr>
-                <td>Name:</td>
-                <td>
-                  <TextInput name="Name" value={Name} onChange={this.onChange} key={id} />
-                </td>
+                <FormGroup>
+                  <ControlLabel>Name</ControlLabel>
+                  <FormControl type="text" name="Name" value={Name} onChange={this.onChange} key={id} />
+                </FormGroup>
               </tr>
               <tr>
-                <td>Category:</td>
-                <td>
-                  <select name="Category" value={Category} onChange={this.onChange}>
-                    <option value="Shirt">Shirt</option>
+                <FormGroup controlId="form-category">
+                  <ControlLabel>Category</ControlLabel>
+                  <FormControl componentClass="select" value={Category} name="Category" onChange={this.onChange}>
+                    <option value="Shirts">Shirts</option>
                     <option value="Jeans">Jeans</option>
-                    <option value="Jackets">Jackets</option>
-                    <option value="Sweaters">Sweaters</option>
+                    <option value="Jackets"> Jackets</option>
+                    <option value="Sweaters">Sweaters </option>
                     <option value="Accessories">Accessories</option>
-                  </select>
-                </td>
+                  </FormControl>
+                </FormGroup>
               </tr>
               <tr>
-                <td>Price:</td>
-                <td>
-                  <NumInput name="Price" value={Price} onChange={this.onChange} key={id} />
-                </td>
+                <FormGroup>
+                  <ControlLabel>Price</ControlLabel>
+                  <FormControl name="Price" value={Price} onChange={this.onChange} key={id} />
+                </FormGroup>
               </tr>
               <tr>
-                <td>Image:</td>
-                <td>
-                  <TextInput name="Image" value={Image} onChange={this.onChange} key={id} />
-                </td>
+                <FormGroup>
+                  <ControlLabel>Image:</ControlLabel>
+                  <FormControl name="Image" value={Image} onChange={this.onChange} key={id} />
+                </FormGroup>
               </tr>
               <tr>
+                <tr>
+                  <Button bsStyle="primary" as="input" type="submit" value="Submit">
+                    Submit
+                  </Button>
+                </tr>
                 <td />
-                <td>
-                  <button type="submit">Submit</button>
-                </td>
               </tr>
             </tbody>
           </table>
-          <Link to={`/edit/${id - 1}`}>Prev</Link>
-          {' | '}
-          <Link to={`/edit/${id + 1}`}>Next</Link>
+          <div style={{ padding: '10px 0' }}>
+            <Link to={`/edit/${id - 1}`}>Prev</Link>
+            {' | '}
+            <Link to={`/edit/${id + 1}`}>Next</Link>
+          </div>
+          <div style={{ padding: '10px 0' }}>
+            <Link to="/">Back to Home</Link>
+          </div>
         </form>
       </div>
     ) : (
